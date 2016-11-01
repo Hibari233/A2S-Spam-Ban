@@ -16,8 +16,9 @@ If you have a Dynamic IP, then I would suggest getting something like [NO-IP](ht
 As of now, there is only one cvar, this allows you to specify how long an attacker gets banned for. By default, it's 5 mins.
 * sm_a2s_bantime
 
-### Anything else? ###
-While it's not required but recommended, You can install [SMRcon](https://forums.alliedmods.net/showthread.php?t=168403) extension to provide another layer of protection.
+### Requirements ###
+* [SMRcon](https://forums.alliedmods.net/showthread.php?t=168403)
+* [PTAH](https://forums.alliedmods.net/showthread.php?t=289289)
 
 ### Donate ###
 If you like my work and want to help support me, Then you are more than welcome to [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VS79974BRC244), although you don't have to but I would love you <3!
