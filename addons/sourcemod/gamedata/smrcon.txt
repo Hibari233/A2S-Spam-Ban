@@ -55,8 +55,10 @@
 	{
 		"#supported"
 		{
-			"engine"	"orangebox_valve"
-			"engine"	"css"
+			"game"	"tf"
+			"game"	"cstrike"
+			"game"	"dod"
+			"game"	"hl2mp"
 		}
 		
 		"Signatures"
@@ -88,13 +90,28 @@
 			"OnSocketClosed"
 			{
 				"library"	"engine"
-				"windows"	"\x55\x8B\xEC\x56\x8B\x75\x10\xC6\x41\x50\x01"
+				"windows"	"\x55\x8B\xEC\x56\x8B\x75\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x74\x2A\x8B\xCE\xE8"
 				"linux"		"@_ZN11CRConServer14OnSocketClosedEiRK8netadr_sPv"
 			}
+		}
+	}
+	
+	"#default"
+	{
+		"#supported"
+		{
+			"game"	"tf"
+			"game"	"cstrike"
+			"game"	"dod"
+			"game"	"hl2mp"
+		}
+		
+		"Signatures"
+		{
 			"IsPassword"
 			{
 				"library"	"engine"
-				"windows"	"\x55\x8B\xEC\x8B\x41\x40\x83\xC1\x40\x85\xC0\x74\x2A\x80\x38\x00"
+				"windows"	"\x55\x8B\xEC\x8B\x41\x2A\x83\xC1\x2A\x85\xC0\x74\x2A\x80\x38\x00\x74"
 				"linux"		"@_ZNK11CRConServer10IsPasswordEPKc"
 			}
 		}
@@ -199,12 +216,12 @@
 			{
 				"library"	"engine"
 				"windows"	"\x55\x8B\xEC\x51\x56\x8B\xF1\x8B\x0D\x2A\x2A\x2A\x2A\x81\xF9\x2A\x2A\x2A\x2A\x75\x2A\xA1\x2A\x2A\x2A\x2A\x8B\xD0"
-				"linux"		"@_Z20Filter_ShouldDiscardRK8netadr_s"
+				"linux"		"@_Z20Filter_ShouldDiscardRK10ns_address"
 			}
 			"LogCommand"
 			{
 				"library"	"engine"
-				"windows"	"\x55\x8B\xEC\xA1\x2A\x2A\x2A\x2A\x57\x8B\xF9\xB9\x2A\x2A\x2A\x2A\xFF\x2A\x2A\x85\xC0"
+				"windows"	"\x55\x8B\xEC\xA1\x2A\x2A\x2A\x2A\x53\x8B\xD9\xB9\x2A\x2A\x2A\x2A\xFF\x50\x34"
 				"linux"		"@_ZN19CServerRemoteAccess10LogCommandEjPKc"
 			}
 			"OnSocketClosed"
@@ -217,6 +234,19 @@
 			{
 				"library"	"engine"
 				"windows"	"\x55\x8B\xEC\x8B\x41\x2A\x85\xC0\x74\x2A\x48\x74\x2A\x83\x79\x4C\x00\xB8"
+				"linux"		"@_ZNK11CRConServer10IsPasswordEPKc"
+			}
+		}
+	}
+	
+	"tf"
+	{
+		"Signatures"
+		{
+			"IsPassword"
+			{
+				"library"	"engine"
+				"windows"	"\x55\x8B\xEC\x8B\x41\x2A\x83\xC1\x2A\x85\xC0\x74\x2A\x80\x38\x00\x74\x2A\xE8"
 				"linux"		"@_ZNK11CRConServer10IsPasswordEPKc"
 			}
 		}
