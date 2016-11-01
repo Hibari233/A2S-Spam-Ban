@@ -231,8 +231,6 @@ stock bool LoadA2SWhiteList()
 
 stock bool ConvertToIPV4(char[] szReturn, int iLength)
 {
-	TrimString(szReturn); StripQuotes(szReturn);
-	
 	int iMatches = g_hRegexMatch.Match(szReturn);
 	
 	for (int i = 0; i < iMatches; i++) {
@@ -245,18 +243,12 @@ stock bool ConvertToIPV4(char[] szReturn, int iLength)
 		return false;
 	}
 	
-	AddrInfo aiAddress;
-	int iResource = PTaH_GetAddrInfo(szReturn, AF_INET, aiAddress);
+	AddrInfo aiAddress; TrimString(szReturn); StripQuotes(szReturn);
 	
-	if (iResource == 0) {
-		AddrInfo aiTemp;
-		
-		for (aiTemp = aiAddress; aiTemp; aiTemp = aiTemp.NextIP) {
-			aiTemp.GetIP(szReturn, iLength);
-			return true;
-		}
-		
+	if (PTaH_GetAddrInfo(szReturn, AF_INET, aiAddress) == 0) {
+		aiAddress.GetIP(szReturn, iLength);
 		aiAddress.ClearMem();
+		return true;
 	}
 	
 	return false;
