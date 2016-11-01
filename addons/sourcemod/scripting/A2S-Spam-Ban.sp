@@ -5,6 +5,7 @@
 *****************************************************************************************************
 	CHANGELOG: 
 			0.1 - Initial Release.
+			0.2 - SMRcon is now required.
 					
 *****************************************************************************************************
 
@@ -14,9 +15,7 @@
 #include <regex>
 #include <PTaH>
 #include <autoexecconfig>
-
-#undef REQUIRE_PLUGIN
-#tryinclude <smrcon>
+#include <smrcon>
 
 /****************************************************************************************************
 	ETIQUETTE.
@@ -46,7 +45,7 @@ public Plugin myinfo =
 {
 	name = "A2S Anti Spam", 
 	author = "SM9();", 
-	version = "0.1", 
+	version = "0.2", 
 	url = "www.fragdeluxe.com"
 }
 
