@@ -1,0 +1,14 @@
+// In this file you can specify either an IP or hostname which you would want to whitelist, this is useful for people that use HLSW for example.
+// If you have a Dynamic IP, you can use something like NO-IP and then whitelist the hostname which you have created.
+// 2 Examples have been created, you can remove these if you wish.
+
+"A2S Whitelist"
+{
+	"Google hostname" {
+		"ip" "google.com"
+	}
+	
+	"Google IP" {
+		"ip" "216.58.198.206"
+	}
+}
