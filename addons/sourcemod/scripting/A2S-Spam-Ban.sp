@@ -132,10 +132,9 @@ public Action Timer_RemoveBan(Handle hTimer, int iArrayCell)
 	
 	char szIP[45]; g_alBannedIPs.GetString(iArrayCell, szIP, sizeof(szIP));
 	
-	if (RemoveBan(szIP, BANFLAG_IP)) {
-		g_alBannedIPs.Erase(iArrayCell);
-		LogToFileEx(g_szLogFile, "%s was unbanned.", szIP);
-	}
+	g_alBannedIPs.Erase(iArrayCell);
+	RemoveBan(szIP, BANFLAG_IP);
+	LogToFileEx(g_szLogFile, "%s was unbanned.", szIP);
 	
 	return Plugin_Stop;
 }
