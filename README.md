@@ -5,7 +5,7 @@ A2S Anti Spam is a plugin which automatically IP bans an A2S Query attacker thus
 # What games are supported? #
 It has only been tested in CSGO and I believe that is the only game which is supported as of now, because we rely on the [PTAH](https://forums.alliedmods.net/showthread.php?p=2464171) extension (Thanks, komashchenko)
 
-### Installation is easy, Just download the latest version from [here](https://bitbucket.org/SM91337/a2s-spam-ban/downloads) and copy to your server in the correct same structure.###
+### Installation is easy, Just click download repository [here](https://bitbucket.org/SM91337/a2s-spam-ban/downloads) to get the latest version and copy to your server in the correct same structure.###
 
 ### WhiteList file ###
 In the sourcemod/configs folder you will see a2s-whitelist.txt, here you can add IPs or Hostnames which won't get banned.
