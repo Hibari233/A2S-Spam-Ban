@@ -69,7 +69,7 @@ public void OnPluginStart()
 	if (g_alBannedIPs != null) {
 		g_alBannedIPs.Clear();
 	} else {
-		g_alBannedIPs = new ArrayList(256);
+		g_alBannedIPs = new ArrayList(45);
 	}
 }
 
@@ -188,7 +188,7 @@ stock bool LoadA2SWhiteList()
 	if (g_alWhiteList != null) {
 		g_alWhiteList.Clear();
 	} else {
-		g_alWhiteList = new ArrayList(256);
+		g_alWhiteList = new ArrayList(45);
 	}
 	
 	char szPath[PLATFORM_MAX_PATH];
