@@ -6,6 +6,7 @@
 	CHANGELOG: 
 			0.1 - Initial Release.
 			0.2 - SMRcon is now required.
+			0.3 - Fix error / crash when removing ban.
 					
 *****************************************************************************************************
 
@@ -45,7 +46,7 @@ public Plugin myinfo =
 {
 	name = "A2S Anti Spam", 
 	author = "SM9();", 
-	version = "0.2", 
+	version = "0.3", 
 	url = "www.fragdeluxe.com"
 }
 
@@ -112,14 +113,13 @@ public Action ServerConsolePrint(const char[] sMessage)
 		return Plugin_Continue;
 	}
 	
-	if (IsIPv4WhiteListed(szIP)) {
+	if (IsIPv4WhiteListed(szIP) || IsIPv4Banned(szIP)) {
 		return Plugin_Continue;
 	}
 	
-	if (BanIdentity(szIP, g_iBanTime, BANFLAG_IP, "A2S Query Spam")) {
-		LogToFileEx(g_szLogFile, "%s was IP banned for %d minute(s) (A2S query spam)", szIP, g_iBanTime);
-		CreateTimer(g_iBanTime * 60.0, Timer_RemoveBan, g_alBannedIPs.PushString(szIP));
-	}
+	CreateTimer(g_iBanTime * 60.0, Timer_RemoveBan, g_alBannedIPs.PushString(szIP));
+	BanIdentity(szIP, 0, BANFLAG_IP, "A2S Query Spam");
+	LogToFileEx(g_szLogFile, "%s was IP banned for %d minute(s) (A2S query spam)", szIP, g_iBanTime);
 	
 	return Plugin_Continue;
 }
@@ -132,8 +132,8 @@ public Action Timer_RemoveBan(Handle hTimer, int iArrayCell)
 	
 	char szIP[45]; g_alBannedIPs.GetString(iArrayCell, szIP, sizeof(szIP));
 	
-	g_alBannedIPs.Erase(iArrayCell);
 	RemoveBan(szIP, BANFLAG_IP);
+	g_alBannedIPs.Erase(iArrayCell);
 	LogToFileEx(g_szLogFile, "%s was unbanned.", szIP);
 	
 	return Plugin_Stop;
@@ -264,6 +264,27 @@ stock bool IsIPv4WhiteListed(const char[] szIP)
 	
 	for (int i = 0; i < iAddresses; i++) {
 		g_alWhiteList.GetString(i, szBuffer, sizeof(szBuffer));
+		
+		if (StrEqual(szIP, szBuffer, false)) {
+			return true;
+		}
+	}
+	
+	return false;
+} 
+
+stock bool IsIPv4Banned(const char[] szIP)
+{
+	int iAddresses = g_alBannedIPs.Length;
+	
+	if (iAddresses <= 0) {
+		return false;
+	}
+	
+	char szBuffer[45];
+	
+	for (int i = 0; i < iAddresses; i++) {
+		g_alBannedIPs.GetString(i, szBuffer, sizeof(szBuffer));
 		
 		if (StrEqual(szIP, szBuffer, false)) {
 			return true;
