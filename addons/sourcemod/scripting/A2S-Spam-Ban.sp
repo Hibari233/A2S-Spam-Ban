@@ -10,6 +10,7 @@
 			0.4 - 
 				- Make SMRcon Optional.
 				- Use .FindString method instead to check if IP banned or Whitelisted.
+			0.5 - Updated PTAH include and callback.
 					
 *****************************************************************************************************
 
@@ -51,7 +52,7 @@ public Plugin myinfo =
 {
 	name = "A2S Anti Spam", 
 	author = "SM9();", 
-	version = "0.4", 
+	version = "0.5", 
 	url = "www.fragdeluxe.com"
 }
 
@@ -106,7 +107,7 @@ public void OnCvarChanged(ConVar hConVar, const char[] szOldValue, const char[] 
 	}
 }
 
-public Action ServerConsolePrint(const char[] sMessage)
+public Action ServerConsolePrint(const char[] sMessage, LoggingSeverity lSeverity)
 {
 	if (StrContains(sMessage, "IP rate limiting client") == -1) {
 		return Plugin_Continue;

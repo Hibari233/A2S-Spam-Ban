@@ -40,6 +40,35 @@ enum EStickerAttributeType
     PatternRotation 
 };
 
+enum LoggingSeverity
+{
+	//-----------------------------------------------------------------------------
+	// An informative logging message.
+	//-----------------------------------------------------------------------------
+	LS_MESSAGE = 0,
+
+	//-----------------------------------------------------------------------------
+	// A warning, typically non-fatal
+	//-----------------------------------------------------------------------------
+	LS_WARNING = 1,
+
+	//-----------------------------------------------------------------------------
+	// A message caused by an Assert**() operation.
+	//-----------------------------------------------------------------------------
+	LS_ASSERT = 2,
+
+	//-----------------------------------------------------------------------------
+	// An error, typically fatal/unrecoverable.
+	//-----------------------------------------------------------------------------
+	LS_ERROR = 3,
+
+	//-----------------------------------------------------------------------------
+	// A placeholder level, higher than any legal value.
+	// Not a real severity value!
+	//-----------------------------------------------------------------------------
+	LS_HIGHEST_SEVERITY = 4,
+};
+
 methodmap CEconItemDefinition
 {
 	//!!!!!!!!!!!!!!!!!!!!! CEconItemDefinition is not Handle, CloseHandle() - NOT NEEDED !!!!!!!!!!!!!!!!!!!!!
@@ -353,8 +382,7 @@ typeset PTaHCB
 	*/
 	function Action (int iClient, const char[] sModel, char sNewModel[128]);
 	
-	/** ConsolePrint/ExecuteStringCommand
-	 * ConsolePrint
+	/** ConsolePrint
 	 *
 	 *	Called before displaying messages to the console player.
 	 *	-
@@ -363,7 +391,10 @@ typeset PTaHCB
 	 *	-
 	 * @return	Return Plugin_Stop or Plugin_Handled restrict display message. Return Plugin_Continue allow the display message without changes. Return Plugin_Changed allow display changed message.
 	 *	-
-	 * ExecuteStringCommand
+	 */
+	function Action (int iClient, char sMessage[1024]);
+	
+	/** ExecuteStringCommand
 	 *
 	 *	Called before executing the command player of the team on the server.
 	 *	-
@@ -403,10 +434,11 @@ typeset PTaHCB
 	 *	Called before displaying a message in the server console (Be careful with the messages).
 	 *	-
 	 * @param sMessage				The message is printed to the server console.
+	 * @param severity				Logging severity message.
 	 *	-
 	 * @return	Return Plugin_Stop or Plugin_Handled restrict the display messages. Return Plugin_Continue allow display messages without changes.
 	*/
-	function Action (const char[] sMessage);
+	function Action (const char[] sMessage, LoggingSeverity severity);
 };
 
 /**
