@@ -148,21 +148,9 @@ public Action Timer_RemoveBan(Handle hTimer, int iArrayCell)
 #if defined _updater_included
 public Action SMRCon_OnAuth(int iRconId, const char[] szIP, const char[] szPassword, bool &bAllow)
 {
-	int iBanIPs = g_alBannedIPs.Length;
-	
-	if (iBanIPs <= 0) {
-		return Plugin_Continue;
-	}
-	
-	char szBuffer[45];
-	
-	for (int i = 0; i < iBanIPs; i++) {
-		g_alBannedIPs.GetString(i, szBuffer, sizeof(szBuffer));
-		
-		if (StrEqual(szBuffer, szIP, false)) {
-			bAllow = false;
-			return Plugin_Changed;
-		}
+	if(g_alBannedIPs.FindString(szIP) != -1) {
+		bAllow = false;
+		return Plugin_Changed;
 	}
 	
 	return Plugin_Continue;
@@ -170,21 +158,9 @@ public Action SMRCon_OnAuth(int iRconId, const char[] szIP, const char[] szPassw
 
 public Action SMRCon_OnCommand(int iRconId, const char[] szIP, const char[] szCommand, bool &bAllow)
 {
-	int iBanIPs = g_alBannedIPs.Length;
-	
-	if (iBanIPs <= 0) {
-		return Plugin_Continue;
-	}
-	
-	char szBuffer[45];
-	
-	for (int i = 0; i < iBanIPs; i++) {
-		g_alBannedIPs.GetString(i, szBuffer, sizeof(szBuffer));
-		
-		if (StrEqual(szBuffer, szIP, false)) {
-			bAllow = false;
-			return Plugin_Changed;
-		}
+	if(g_alBannedIPs.FindString(szIP) != -1) {
+		bAllow = false;
+		return Plugin_Changed;
 	}
 	
 	return Plugin_Continue;
