@@ -7,6 +7,9 @@
 			0.1 - Initial Release.
 			0.2 - SMRcon is now required.
 			0.3 - Fix error / crash when removing ban.
+			0.4 - 
+				- Make SMRcon Optional.
+				- Use .FindString method instead to check if IP banned or Whitelisted.
 					
 *****************************************************************************************************
 
@@ -16,7 +19,9 @@
 #include <regex>
 #include <PTaH>
 #include <autoexecconfig>
-#include <smrcon>
+
+#undef REQUIRE_EXTENSIONS
+#tryinclude <smrcon>
 
 /****************************************************************************************************
 	ETIQUETTE.
@@ -46,7 +51,7 @@ public Plugin myinfo =
 {
 	name = "A2S Anti Spam", 
 	author = "SM9();", 
-	version = "0.3", 
+	version = "0.4", 
 	url = "www.fragdeluxe.com"
 }
 
@@ -113,11 +118,12 @@ public Action ServerConsolePrint(const char[] sMessage)
 		return Plugin_Continue;
 	}
 	
-	if (IsIPv4WhiteListed(szIP) || IsIPv4Banned(szIP)) {
+	if (g_alWhiteList.FindString(szIP) != -1 ||  g_alBannedIPs.FindString(szIP) != -1) {
 		return Plugin_Continue;
 	}
 	
 	CreateTimer(g_iBanTime * 60.0, Timer_RemoveBan, g_alBannedIPs.PushString(szIP));
+	
 	BanIdentity(szIP, 0, BANFLAG_IP, "A2S Query Spam");
 	LogToFileEx(g_szLogFile, "%s was IP banned for %d minute(s) (A2S query spam)", szIP, g_iBanTime);
 	
@@ -139,6 +145,7 @@ public Action Timer_RemoveBan(Handle hTimer, int iArrayCell)
 	return Plugin_Stop;
 }
 
+#if defined _updater_included
 public Action SMRCon_OnAuth(int iRconId, const char[] szIP, const char[] szPassword, bool &bAllow)
 {
 	int iBanIPs = g_alBannedIPs.Length;
@@ -182,6 +189,7 @@ public Action SMRCon_OnCommand(int iRconId, const char[] szIP, const char[] szCo
 	
 	return Plugin_Continue;
 }
+#endif
 
 stock bool LoadA2SWhiteList()
 {
@@ -214,7 +222,7 @@ stock bool LoadA2SWhiteList()
 			continue;
 		}
 		
-		if (IsIPv4WhiteListed(szBuffer)) {
+		if (g_alWhiteList.FindString(szBuffer) != -1) {
 			continue;
 		}
 		
@@ -251,45 +259,3 @@ stock bool ConvertToIPV4(char[] szReturn, int iLength)
 	
 	return false;
 }
-
-stock bool IsIPv4WhiteListed(const char[] szIP)
-{
-	int iAddresses = g_alWhiteList.Length;
-	
-	if (iAddresses <= 0) {
-		return false;
-	}
-	
-	char szBuffer[45];
-	
-	for (int i = 0; i < iAddresses; i++) {
-		g_alWhiteList.GetString(i, szBuffer, sizeof(szBuffer));
-		
-		if (StrEqual(szIP, szBuffer, false)) {
-			return true;
-		}
-	}
-	
-	return false;
-} 
-
-stock bool IsIPv4Banned(const char[] szIP)
-{
-	int iAddresses = g_alBannedIPs.Length;
-	
-	if (iAddresses <= 0) {
-		return false;
-	}
-	
-	char szBuffer[45];
-	
-	for (int i = 0; i < iAddresses; i++) {
-		g_alBannedIPs.GetString(i, szBuffer, sizeof(szBuffer));
-		
-		if (StrEqual(szIP, szBuffer, false)) {
-			return true;
-		}
-	}
-	
-	return false;
-} 
